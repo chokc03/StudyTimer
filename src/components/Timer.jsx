@@ -25,6 +25,7 @@ function Timer() {
             }
             //if the first condition is false let the time go on
             else if(second>=59){
+                
                 setMinute(minute+1);
                 setSecond(0);
             }
@@ -42,6 +43,20 @@ function Timer() {
         setStop(value=>!value);
     }
 
+    //change the time into string and add 0 when the time is in single digit
+    const handleZeros=(numbers)=>{
+        const numberString = numbers.toString();
+        if(numberString.length>=2){
+            return numberString;
+        }
+        else{
+            return "0".repeat(2-numberString.length)+numberString;
+        }
+    }
+
+    const getSeconds = handleZeros(second);
+    const getMinutes = handleZeros(minute);
+
     return (
         <div className='TimerContainer'>
             <div className='TimerSubject'>
@@ -49,9 +64,9 @@ function Timer() {
                 <h2 className={status?'RestNReview active':'RestNReview unactive'}>Rest & Review</h2>
             </div>
             <div className="TimerTime">
-                <p className='Minute'>{minute}</p>
+                <p className='Minute'>{getMinutes}</p>
                 <p className='Colon'> : </p>
-                <p className='Second'>{second}</p>
+                <p className='Second'>{getSeconds}</p>
             </div>
             <div className="TimerControl">
                 <button onClick={handleStop} status="Stop" className={stop?"StartBtn":"StopBtn"}>
